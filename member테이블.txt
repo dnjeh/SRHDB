@@ -1,0 +1,15 @@
+drop database if exists java_pro;
+create database java_pro;
+use java_pro;
+
+CREATE TABLE member (
+	id varchar(20) NOT NULL,
+	name VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	pwd VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	address varchar(100) NULL DEFAULT NULL,
+	joinday date NULL DEFAULT NULL,
+	PRIMARY KEY (id) USING BTREE
+);
+
+insert into member values('hong', '홍길동','1234','서울시 강남구', '2020-03-02');
+insert into member values('lee', '이순신','1111','경상남도 통영군', '2015-05-05');

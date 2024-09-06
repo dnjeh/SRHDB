@@ -94,6 +94,26 @@ public class ItemDAO {
 		}
 		return ret;
 	}
+	
+	public boolean updateItem(ItemVO vo) {
+		boolean ret = false;
+		String sql = "update item set name=?, company=?, amount=? where no = ?";
+		
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, vo.getName());
+			stmt.setString(2, vo.getCompany());
+			stmt.setInt(3, vo.getAmount());
+			stmt.setInt(4, vo.getNo());
+			ret = stmt.executeUpdate()>0;
+		} catch (SQLException e) {
+			System.out.println("데이터 수정 오류." + e.toString());
+		} finally {
+			//dbClose();
+		}
+		return ret;
+	}
+	
 // 데이터베이스 닫기
 	public void dbClose() {
 		try {

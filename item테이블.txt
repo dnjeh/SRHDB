@@ -1,0 +1,14 @@
+drop database if exists test24;
+create database test24;
+use test24;
+
+CREATE TABLE `item` (
+	`no` INT(11) NOT NULL,
+	`name` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	`company` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`amount` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`no`) USING BTREE
+);
+
+insert into item values(1, '아이로봇','로봇주식회사',1000);
+insert into item values(2, '키티','인형주식회사',5000);
