@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class SwingLogin extends JFrame{
+public class SwingLogin extends JFrame implements ActionListener, KeyListener{
 	
 	private JTextField tfId;
 	private JPasswordField tfPwd;
@@ -38,7 +38,10 @@ public class SwingLogin extends JFrame{
 		p.add(btnLogin);
 		p.add(btnReg);
 
-		
+		btnLogin.addActionListener(this);
+		btnReg.addActionListener(this);
+		tfId.addKeyListener(this);
+		tfPwd.addKeyListener(this);
 		
 		setTitle("로그인 화면");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -49,6 +52,66 @@ public class SwingLogin extends JFrame{
 	
 	public static void main(String[] args) {
 		new SwingLogin();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == btnLogin) {
+			proLogin();
+		}
+		else if(e.getSource() == btnReg) {
+			new SwingRegister();
+		}
+	}
+
+	private void proLogin() {
+		String id = tfId.getText().trim();
+		String pwd = (new String(tfPwd.getPassword())).trim();
+		
+		if(id.equals("")||pwd.equals("")) {
+			JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호가 비었습니다.");
+			return;
+		}
+		
+		MemberDAO dao = new MemberDAO();
+		ArrayList<MemberVO> list =  dao.selectMember(id);
+		if(list.size() == 0) {
+			JOptionPane.showMessageDialog(this, id + "은(는) 없는 아이디입니다.");
+		}
+		else {
+			if(pwd.equals(list.get(0).getPwd())) {
+				JOptionPane.showMessageDialog(this, id + "님 반갑습니다!");
+				new SwingSearch();
+			}
+			else {
+				JOptionPane.showMessageDialog(this, id + "은(는) 잘못된 아이디입니다.");
+			}
+		}
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if(e.getSource() == tfId) {
+				tfPwd.requestFocus();
+			}
+			else if(e.getSource() == tfPwd)
+				btnLogin.doClick();
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

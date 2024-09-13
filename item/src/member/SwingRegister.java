@@ -24,6 +24,23 @@ public class SwingRegister extends JFrame{
 	
 	// 생성자 만들기
 
+	public SwingRegister() {
+		initScreen();
+		
+		LocalDate date = LocalDate.now();
+		textF[4].setText(date.toString());
+		textF[4].setEnabled(false);
+		setTitle("회원 등록");
+		setVisible(true);
+	}
+	
+	public SwingRegister(MemberVO vo) {
+		initScreen();
+		setTitle("회원 수정");
+		setVisible(true);
+		
+	}
+	
 	
 
 	

@@ -12,7 +12,7 @@ public class MemberDAO {
 	private PreparedStatement stmt;
 	private ResultSet rs;
 	
-	private String url = "jdbc:mariadb//127.0.0.1:3306/java_pro";
+	private String url = "jdbc:mariadb://127.0.0.1:3306/java_pro";
 	private String id = "root";
 	private String pwd = "1234";
 	
@@ -57,7 +57,7 @@ public class MemberDAO {
 			}
 			rs = stmt.executeQuery();
 			while(rs.next()) {
-				
+				list.add(new MemberVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
