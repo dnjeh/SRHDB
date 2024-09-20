@@ -30,7 +30,7 @@ public class MemberDAO {
 		}
 	}
 	
-	private void dbClose() {
+	public void dbClose() {
 		// TODO Auto-generated method stub
 		try {
 			if(rs!=null) rs.close();
@@ -65,5 +65,24 @@ public class MemberDAO {
 		}
 		
 		return list;
+		
+		//데이터 입력 처리
+	}
+	public boolean insertMember(MemberVO vo) {
+		boolean ret = false;
+		String sql = "insert into member values(?, ?, ?, ?, ?)";
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, vo.getId());
+			stmt.setString(2, vo.getName());
+			stmt.setString(3, vo.getPwd());
+			stmt.setString(4, vo.getAddress());
+			stmt.setString(5, vo.getJoinday());
+			
+			if(stmt.executeUpdate()>0) ret = true;
+		} catch (SQLException e) {
+			System.out.println();
+		}
+		return ret;
 	}
 }

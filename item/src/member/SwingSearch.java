@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class SwingSearch extends JFrame{
+public class SwingSearch extends JFrame implements ActionListener{
 	
 	private JTextField tfId = new JTextField(10);
 	private JButton btnSearch = new JButton("검색");
@@ -39,6 +39,10 @@ public class SwingSearch extends JFrame{
 		add(p1, BorderLayout.NORTH);
 		add(p2, BorderLayout.CENTER);
 		
+		btnSearch.addActionListener(this);
+		btnDelete.addActionListener(this);
+		btnUpdate.addActionListener(this);
+		
 		setTitle("회원 관리");
 		setSize(800,500);
 		setLocationRelativeTo(null);
@@ -50,7 +54,40 @@ public class SwingSearch extends JFrame{
 
 
 	public static void main(String[] args) {
-		new SwingSearch();
+	}
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String id = tfId.getText().trim();
+		MemberDAO dao = new MemberDAO();
+		
+		if(e.getSource() == btnSearch) {
+			ta.setText("");
+			ArrayList<MemberVO> list = dao.selectMember(id);
+			for(MemberVO vo: list) {
+				ta.append(vo.toString()+"\n");
+			}
+		}
+		else if(e.getSource() == btnUpdate) {
+			if(id.equals("")) {
+				JOptionPane.showMessageDialog(this, "아이디를 입력하세요!!");
+				return;
+			}
+			ArrayList<MemberVO> list = dao.selectMember(id);
+			if(list.size() == 0) {
+				JOptionPane.showMessageDialog(this, id + "는 없는 아이디입니다.");
+				return;
+			}
+			MemberVO vo = list.get(0);
+			
+			new SwingRegister(vo);
+		}
+		else if(e.getSource() == btnDelete) {
+			
+		}
+		dao.dbClose();
 	}
 }
 
